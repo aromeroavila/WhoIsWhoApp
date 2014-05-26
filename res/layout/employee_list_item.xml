@@ -14,16 +14,24 @@
     <TextView
             android:id="@+id/employee_name_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small_gap"
+            android:layout_toRightOf="@id/employee_photo_i"/>
 
     <TextView
             android:id="@+id/employee_title_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_gap"
+            android:layout_alignLeft="@id/employee_name_tv"
+            android:layout_below="@id/employee_name_tv"/>
 
     <TextView
             android:id="@+id/employee_bio_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_gap"
+            android:layout_alignLeft="@id/employee_name_tv"
+            android:layout_below="@id/employee_title_tv"/>
 
 </RelativeLayout>

@@ -29,18 +29,15 @@ public class EmployeeHtmlParser extends AsyncTask<String, Void, Void> {
             Document document = Jsoup.connect(url).get();
             Elements employeeElements = document.select("div.col.col2");
             String name, title, photoUrl, bio;
-            int current = 1;
 
             for (Element employeeElement : employeeElements) {
                 name = title = photoUrl = bio = "";
                 photoUrl = employeeElement.select("div img").attr("src");
                 name = employeeElement.select("h3").text();
-                title = employeeElement.select("p:first-child").text();
+                title = employeeElement.select("p:first-of-type").text();
                 bio = employeeElement.select("p.user-description").text();
 
                 mEmployeeList.add(new Employee(name, title, photoUrl, bio));
-
-                current++;
             }
 
         } catch (IOException e) {
