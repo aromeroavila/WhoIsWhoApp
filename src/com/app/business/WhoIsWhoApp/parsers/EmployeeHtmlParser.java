@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeHtmlParser extends AsyncTask<String, String, Void> {
+public class EmployeeHtmlParser extends AsyncTask<String, Void, Void> {
 
     private EmployeeHtmlParserListener mListener;
     private List<Employee> mEmployeeList;
@@ -29,7 +29,6 @@ public class EmployeeHtmlParser extends AsyncTask<String, String, Void> {
             Document document = Jsoup.connect(url).get();
             Elements employeeElements = document.select("div.col.col2");
             String name, title, photoUrl, bio;
-            int employeeElementsNumber = employeeElements.size();
             int current = 1;
 
             for (Element employeeElement : employeeElements) {
@@ -41,7 +40,6 @@ public class EmployeeHtmlParser extends AsyncTask<String, String, Void> {
 
                 mEmployeeList.add(new Employee(name, title, photoUrl, bio));
 
-                publishProgress(getUpdateMessage(current, employeeElementsNumber));
                 current++;
             }
 
@@ -53,16 +51,7 @@ public class EmployeeHtmlParser extends AsyncTask<String, String, Void> {
     }
 
     @Override
-    protected void onProgressUpdate(String... progressMessages) {
-        mListener.onUpdateHtmlParseProgress(progressMessages[0]);
-    }
-
-    @Override
     protected void onPostExecute(Void aVoid) {
         mListener.onEmployeeHtmlParseComplete(mEmployeeList);
-    }
-
-    private String getUpdateMessage(int currentEmployee, int totalEmployees) {
-        return currentEmployee + " of " + totalEmployees + " employees parsed";
     }
 }

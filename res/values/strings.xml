@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Who\'s Who</string>
+    <string name="parsing_progress_dialog_title">Employee Parser</string>
+    <string name="parsing_progress_dialog_initial_message">Parsing employee profiles</string>
 </resources>
