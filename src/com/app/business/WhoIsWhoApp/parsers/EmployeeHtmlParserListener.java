@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface EmployeeHtmlParserListener {
     public void onEmployeeHtmlParseComplete(List<Employee> employeeList);
+    public void onParseError(String reason);
 }

@@ -9,6 +9,7 @@ import com.app.business.WhoIsWhoApp.adapters.EmployeeListAdapter;
 import com.app.business.WhoIsWhoApp.model.Employee;
 import com.app.business.WhoIsWhoApp.parsers.EmployeeHtmlParser;
 import com.app.business.WhoIsWhoApp.parsers.EmployeeHtmlParserListener;
+import com.app.business.WhoIsWhoApp.util.Util;
 
 import java.util.List;
 
@@ -43,7 +44,16 @@ public class EmployeeListActivity extends Activity implements EmployeeHtmlParser
     public void onEmployeeHtmlParseComplete(List<Employee> employeeList) {
         mProgressDialog.dismiss();
 
-        EmployeeListAdapter employeeListAdapter = new EmployeeListAdapter(this, R.layout.employee_list_item, employeeList);
-        mEmployeesListView.setAdapter(employeeListAdapter);
+        if (employeeList != null && employeeList.size() > 0) {
+            EmployeeListAdapter employeeListAdapter = new EmployeeListAdapter(this, R.layout.employee_list_item, employeeList);
+            mEmployeesListView.setAdapter(employeeListAdapter);
+        } else {
+            Util.displayErrorScreen(this, getString(R.string.empty_employee_list_received_error_message));
+        }
+    }
+
+    @Override
+    public void onParseError(String reason) {
+        Util.displayErrorScreen(this, reason);
     }
 }

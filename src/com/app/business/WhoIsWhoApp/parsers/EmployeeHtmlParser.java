@@ -47,6 +47,7 @@ public class EmployeeHtmlParser extends AsyncTask<String, Void, Void> {
 
         } catch (IOException e) {
             e.printStackTrace();
+            mListener.onParseError(e.getMessage());
         }
 
         return null;
