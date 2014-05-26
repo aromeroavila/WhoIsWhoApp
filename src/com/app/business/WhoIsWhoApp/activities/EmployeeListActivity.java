@@ -1,9 +1,12 @@
 package com.app.business.WhoIsWhoApp.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import com.app.business.WhoIsWhoApp.R;
 import com.app.business.WhoIsWhoApp.adapters.EmployeeListAdapter;
@@ -23,6 +26,7 @@ public class EmployeeListActivity extends Activity implements EmployeeHtmlParser
     private ListView mEmployeesListView;
     private EmployeeHtmlParser mEmployeeHtmlParser;
     private List<Employee> mSavedEmployeeList;
+    private EmployeeListAdapter mEmployeeListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,13 +44,17 @@ public class EmployeeListActivity extends Activity implements EmployeeHtmlParser
                         new EmployeeListAdapter(this, R.layout.employee_list_item, mSavedEmployeeList);
                 mEmployeesListView.setAdapter(employeeListAdapter);
             } else {
-                initProgressDialog();
-                mEmployeeHtmlParser = new EmployeeHtmlParser(this);
-                mEmployeeHtmlParser.execute(THE_APP_BUSINESS_TEAM_URL);
+                startHtmlParsing();
             }
         } else {
             Util.displayErrorScreen(this, getString(R.string.no_internet_connection_error_message));
         }
+    }
+
+    private void startHtmlParsing() {
+        initProgressDialog();
+        mEmployeeHtmlParser = new EmployeeHtmlParser(this);
+        mEmployeeHtmlParser.execute(THE_APP_BUSINESS_TEAM_URL);
     }
 
     @Override
@@ -76,8 +84,30 @@ public class EmployeeListActivity extends Activity implements EmployeeHtmlParser
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.employee_list_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                if (mEmployeeListAdapter != null) {
+                    mEmployeeListAdapter.notifyDataSetChanged();
+                }
+                startHtmlParsing();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initProgressDialog() {
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
         mProgressDialog.setTitle(getString(R.string.parsing_progress_dialog_title));
         mProgressDialog.setMessage(getString(R.string.parsing_progress_dialog_initial_message));
         mProgressDialog.show();
@@ -89,8 +119,8 @@ public class EmployeeListActivity extends Activity implements EmployeeHtmlParser
 
         if (employeeList != null && employeeList.size() > 0) {
             mSavedEmployeeList = employeeList;
-            EmployeeListAdapter employeeListAdapter = new EmployeeListAdapter(this, R.layout.employee_list_item, mSavedEmployeeList);
-            mEmployeesListView.setAdapter(employeeListAdapter);
+            mEmployeeListAdapter = new EmployeeListAdapter(this, R.layout.employee_list_item, mSavedEmployeeList);
+            mEmployeesListView.setAdapter(mEmployeeListAdapter);
         } else {
             Util.displayErrorScreen(this, getString(R.string.empty_employee_list_received_error_message));
         }

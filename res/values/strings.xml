@@ -12,4 +12,6 @@
 
     <string name="BUNDLE_ERROR_ACTIVITY_ERROR_MESSAGE">bundle_error_activity_message</string>
     <string name="BUNDLE_EMPLOYEE_LIST_ACTIVITY_SAVED_LIST">bundle_saved_employee_list</string>
+
+    <string name="action_refresh">Refresh</string>
 </resources>
