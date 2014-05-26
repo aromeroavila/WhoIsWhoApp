@@ -31,20 +31,21 @@ public class EmployeeListActivity extends Activity implements EmployeeHtmlParser
 
         mEmployeesListView = (ListView) findViewById(R.id.employees_lv);
 
-        if (savedInstanceState != null) {
-            mSavedEmployeeList = savedInstanceState.
-                    getParcelableArrayList(getString(R.string.BUNDLE_EMPLOYEE_LIST_ACTIVITY_SAVED_LIST));
-            if (mSavedEmployeeList != null) {
+        if (Util.isNetworkConnected(this)) {
+            if (savedInstanceState != null && savedInstanceState.getParcelableArrayList(
+                    getString(R.string.BUNDLE_EMPLOYEE_LIST_ACTIVITY_SAVED_LIST)) != null) {
+                mSavedEmployeeList = savedInstanceState.
+                        getParcelableArrayList(getString(R.string.BUNDLE_EMPLOYEE_LIST_ACTIVITY_SAVED_LIST));
                 EmployeeListAdapter employeeListAdapter =
                         new EmployeeListAdapter(this, R.layout.employee_list_item, mSavedEmployeeList);
                 mEmployeesListView.setAdapter(employeeListAdapter);
             } else {
-                Util.displayErrorScreen(this, getString(R.string.saved_bundle_employee_list_error_message));
+                initProgressDialog();
+                mEmployeeHtmlParser = new EmployeeHtmlParser(this);
+                mEmployeeHtmlParser.execute(THE_APP_BUSINESS_TEAM_URL);
             }
         } else {
-            initProgressDialog();
-            mEmployeeHtmlParser = new EmployeeHtmlParser(this);
-            mEmployeeHtmlParser.execute(THE_APP_BUSINESS_TEAM_URL);
+            Util.displayErrorScreen(this, getString(R.string.no_internet_connection_error_message));
         }
     }
 
@@ -66,6 +67,12 @@ public class EmployeeListActivity extends Activity implements EmployeeHtmlParser
         // when the phone is rotated.
         if (mEmployeeHtmlParser != null && mEmployeeHtmlParser.getStatus() == AsyncTask.Status.RUNNING) {
             mEmployeeHtmlParser.cancel(true);
+        }
+
+        // If the activity is destroyed before the dialog has been dismissed here that is done to avoid
+        // a memory leak.
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
         }
     }
 

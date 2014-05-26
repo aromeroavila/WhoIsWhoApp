@@ -7,9 +7,8 @@
     <string name="error_screen_title">Error</string>
     <string name="error_screen_description">An error has happened:</string>
     <string name="error_screen_default_error_message">Unknown error</string>
-
     <string name="empty_employee_list_received_error_message">Empty employee list received</string>
-    <string name="saved_bundle_employee_list_error_message">Problem trying to get saved employee list</string>
+    <string name="no_internet_connection_error_message">There is no internet connection. Please connect your phone to the internet so the content can be downloaded.</string>
 
     <string name="BUNDLE_ERROR_ACTIVITY_ERROR_MESSAGE">bundle_error_activity_message</string>
     <string name="BUNDLE_EMPLOYEE_LIST_ACTIVITY_SAVED_LIST">bundle_saved_employee_list</string>
