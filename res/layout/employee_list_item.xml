@@ -9,29 +9,47 @@
     <ImageView
             android:id="@+id/employee_photo_i"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_gap"
+            android:layout_marginLeft="@dimen/small_gap"/>
 
     <TextView
             android:id="@+id/employee_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/small_gap"
-            android:layout_toRightOf="@id/employee_photo_i"/>
+            android:layout_marginLeft="@dimen/medium_gap"
+            android:layout_marginRight="@dimen/medium_gap"
+            android:layout_toRightOf="@id/employee_photo_i"
+            android:textStyle="bold"/>
 
     <TextView
             android:id="@+id/employee_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_gap"
+            android:layout_marginTop="@dimen/tiny_gap"
+            android:layout_marginRight="@dimen/medium_gap"
             android:layout_alignLeft="@id/employee_name_tv"
             android:layout_below="@id/employee_name_tv"/>
+
+    <View
+            android:id="@+id/header_line_separator"
+            android:background="@android:color/white"
+            android:layout_width = "wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/small_gap"
+            android:layout_marginRight="@dimen/medium_gap"
+            android:layout_marginBottom="@dimen/small_gap"
+            android:layout_alignLeft="@id/employee_name_tv"
+            android:layout_below="@id/employee_title_tv"/>
 
     <TextView
             android:id="@+id/employee_bio_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_gap"
+            android:layout_marginTop="@dimen/small_gap"
+            android:layout_marginRight="@dimen/medium_gap"
+            android:layout_marginBottom="@dimen/small_gap"
             android:layout_alignLeft="@id/employee_name_tv"
-            android:layout_below="@id/employee_title_tv"/>
+            android:layout_below="@id/header_line_separator"/>
 
 </RelativeLayout>

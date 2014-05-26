@@ -1,6 +1,7 @@
 package com.app.business.WhoIsWhoApp.parsers;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import com.app.business.WhoIsWhoApp.model.Employee;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,13 +32,17 @@ public class EmployeeHtmlParser extends AsyncTask<String, Void, Void> {
             String name, title, photoUrl, bio;
 
             for (Element employeeElement : employeeElements) {
-                name = title = photoUrl = bio = "";
                 photoUrl = employeeElement.select("div img").attr("src");
                 name = employeeElement.select("h3").text();
                 title = employeeElement.select("p:first-of-type").text();
                 bio = employeeElement.select("p.user-description").text();
 
-                mEmployeeList.add(new Employee(name, title, photoUrl, bio));
+                // All the fields are required. This avoid parsing other elements that match the same
+                // css selector but are not of our interest.
+                if (!TextUtils.isEmpty(photoUrl) && !TextUtils.isEmpty(name)
+                        && !TextUtils.isEmpty(title) && !TextUtils.isEmpty(bio)) {
+                    mEmployeeList.add(new Employee(name, title, photoUrl, bio));
+                }
             }
 
         } catch (IOException e) {

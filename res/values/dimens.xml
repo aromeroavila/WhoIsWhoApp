@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="tiny_gap">2dp</dimen>
     <dimen name="small_gap">5dp</dimen>
     <dimen name="medium_gap">10dp</dimen>
     <dimen name="large_gap">15dp</dimen>
+
+    <dimen name="image_resize">96dp</dimen>
 </resources>
